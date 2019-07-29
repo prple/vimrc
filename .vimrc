@@ -30,8 +30,11 @@ Plugin 'tpope/vim-surround' " cst<tag> to rename tag!
 " different version somewhere else.
 " Plugin 'ascenator/L9', {'name': 'newL9'}
 
+" Specific for mako HTML templates
 Plugin 'kpachnis/vim-mako'
 au BufRead,BufNewFile *.mako set filetype=mako
+Plugin 'valloric/MatchTagAlways'
+let g:mta_filetypes = {'html' : 1, 'mako': 1}
 
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-syntastic/syntastic'
@@ -54,7 +57,10 @@ Plugin 'morhetz/gruvbox'
 Plugin 'majutsushi/tagbar'
 Plugin 'Yggdroot/indentLine'
 
+" Specific for Python
 Plugin 'davidhalter/jedi-vim'
+Plugin 'heavenshell/vim-pydocstring'
+
 " Specific for Javascript
 Plugin 'pangloss/vim-javascript'
 Plugin 'othree/javascript-libraries-syntax.vim'
@@ -75,8 +81,12 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 "
+set termguicolors
 set t_Co=256
-colorscheme elflord
+" gruvbox specific settings
+set background=dark
+
+colorscheme gruvbox
 
 set nu			" Line numbers
 syntax on
@@ -177,6 +187,9 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standar
 nmap     <C-F>f <Plug>CtrlSFPrompt                  
 nmap     <C-F>n <Plug>CtrlSFCwordPath
 nmap     <C-F>p <Plug>CtrlSFPwordPath
+
+" setup for vim-pydocstring
+nmap <silent> <C-_> <Plug>(pydocstring)
 
 " autoformat
 augroup autoformat_settings
