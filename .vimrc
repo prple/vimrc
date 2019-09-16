@@ -15,6 +15,7 @@ Plugin 'VundleVim/Vundle.vim'
 " plugin on GitHub repo
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround' " cst<tag> to rename tag!
+Plugin 'tpope/vim-unimpaired'
 
 
 " plugin from http://vim-scripts.org/vim/scripts.html
@@ -35,6 +36,7 @@ Plugin 'kpachnis/vim-mako'
 au BufRead,BufNewFile *.mako set filetype=mako
 Plugin 'valloric/MatchTagAlways'
 let g:mta_filetypes = {'html' : 1, 'mako': 1}
+Plugin 'tmhedberg/matchit' " Mirror
 
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-syntastic/syntastic'
@@ -64,6 +66,7 @@ Plugin 'heavenshell/vim-pydocstring'
 " Specific for Javascript
 Plugin 'pangloss/vim-javascript'
 Plugin 'othree/javascript-libraries-syntax.vim'
+Plugin 'beautify-web/js-beautify'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -84,7 +87,7 @@ filetype plugin indent on    " required
 set termguicolors
 set t_Co=256
 " gruvbox specific settings
-set background=dark
+set background=dark     " <yob> to toggle bettween dark and light
 
 colorscheme gruvbox
 
@@ -125,6 +128,25 @@ nmap <silent> <Insert> :bn <CR>
 " Search word shortcut
 nmap <silent> <Home> yiw/<c-R>"<CR>
 
+" Yank and paste between ""
+nmap <silent> <F3> "byi"
+nmap <silent> <F4> vi""bp
+" ---
+"
+" --- CODE FOLDING ---
+"  zo   : open fold
+"  zO   : open all folds under that fold
+"  zc   : close fold
+"  zm   : increase foldlevel by one
+"  zM   : close all open folds
+"  zr   : decrease foldlevel by one
+"  zR   : open all folds
+"
+set foldmethod=indent   
+set foldnestmax=10
+set nofoldenable
+set foldlevel=2
+
 " ---
 
 " setup for ycm
@@ -140,6 +162,7 @@ let g:ycm_semantic_triggers =  {
   \ }
 
 "python with virtualenv support
+"That shit is broken!
 py << EOF
 import os
 import sys
@@ -193,7 +216,8 @@ nmap <silent> <C-_> <Plug>(pydocstring)
 
 " autoformat
 augroup autoformat_settings
-      autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
+      autocmd FileType c,cpp,proto AutoFormatBuffer clang-format
+      autocmd FileType javascript AutoFormatBuffer js-beautify
       autocmd FileType python AutoFormatBuffer yapf
 augroup END
 " use google style for clang-format
