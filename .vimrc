@@ -68,6 +68,9 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'beautify-web/js-beautify'
 
+" Org files support
+Plugin 'jceb/vim-orgmode'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 call glaive#Install()        " enable this line after the installation of glaive
@@ -114,6 +117,10 @@ set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 
 " Make pane switching faster
 nnoremap <cr> <c-w>w
+nnoremap <Bslash> <c-w>W
+" Fix to be able to use Enter normally in location windows
+" autocmd CmdwinEnter * nnoremap <CR> <CR>
+" autocmd BufReadPost quickfix nnoremap <CR> <CR>
 
 " Disable PageUp PageDown
 map <silent> <PageUp> <Nop>
@@ -126,7 +133,7 @@ nmap <silent> <Delete> :bp\|bd #<CR>
 nmap <silent> <End> :bp <CR>
 nmap <silent> <Insert> :bn <CR>
 " Search word shortcut
-nmap <silent> <Home> yiw/<c-R>"<CR>
+"nmap <silent> <Home> yiw/<c-R>"<CR> " Use * instead you noob!
 
 " Yank and paste between ""
 nmap <silent> <F3> "byi"
@@ -147,6 +154,15 @@ set foldnestmax=10
 set nofoldenable
 set foldlevel=2
 
+" Custom Grep shorthand commands
+command! -nargs=+ Grep execute 'silent grep! -I -r -n --exclude *.{pyc} **/* -e <args>' | copen | execute 'silent /<args>'
+command! -nargs=+ Pygrep execute 'silent lgrep <args> **/*.py' | lopen 
+command! -nargs=+ Jsgrep execute 'silent lgrep <args> **/*.js' | lopen 
+command! -nargs=+ Makogrep execute 'silent lgrep <args> **/*.mako' | lopen 
+
+nmap <silent> <F7> :lclose <CR>
+nmap <silent> <F6> yiw:Pygrep <c-R>"<CR> "
+
 " ---
 
 " setup for ycm
@@ -163,14 +179,14 @@ let g:ycm_semantic_triggers =  {
 
 "python with virtualenv support
 "That shit is broken!
-py << EOF
-import os
-import sys
-if 'VIRTUAL_ENV' in os.environ:
-    project_base_dir = os.environ['VIRTUAL_ENV']
-    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-    execfile(activate_this, dict(__file__=activate_this))
-EOF
+" py << EOF
+" import os
+" import sys
+" if 'VIRTUAL_ENV' in os.environ:
+"    project_base_dir = os.environ['VIRTUAL_ENV']
+"    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+"    execfile(activate_this, dict(__file__=activate_this))
+" EOF
 
 " setup for syntastic
 set statusline+=%#warningmsg#
@@ -221,7 +237,7 @@ augroup autoformat_settings
       autocmd FileType python AutoFormatBuffer yapf
 augroup END
 " use google style for clang-format
-Glaive codefmt clang_format_style='google'
+"Glaive codefmt clang_format_style='google'
 
 " setup for tagbar
 nmap <F8> :TagbarToggle<CR>
