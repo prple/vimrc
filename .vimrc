@@ -68,6 +68,9 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'beautify-web/js-beautify'
 
+" Specific for Asterisk conf files
+Plugin 'ipoddubny/asterisk-vim'
+
 " Org files support
 Plugin 'jceb/vim-orgmode'
 
