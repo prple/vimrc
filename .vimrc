@@ -235,9 +235,9 @@ nmap <silent> <C-_> <Plug>(pydocstring)
 
 " autoformat
 augroup autoformat_settings
-      autocmd FileType c,cpp,proto AutoFormatBuffer clang-format
+      "autocmd FileType c,cpp,proto AutoFormatBuffer clang-format
       autocmd FileType javascript AutoFormatBuffer js-beautify
-      autocmd FileType python AutoFormatBuffer yapf
+      "autocmd FileType python AutoFormatBuffer yapf
 augroup END
 " use google style for clang-format
 "Glaive codefmt clang_format_style='google'
